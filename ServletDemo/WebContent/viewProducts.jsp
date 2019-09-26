@@ -20,6 +20,7 @@
 			<th>Product Name</th>
 			<th>Manufacturer Name</th>
 			<th>Price</th>
+			<th>Date</th>
 			<th>update</th>
 			<th>delete</th>
 		</tr>
@@ -30,6 +31,7 @@
 				<td><%=product.getProductname() %></td>
 				<td><%=product.getManufacturername() %></td>
 				<td><%=product.getPrice() %></td>
+				<td><%=product.getManufracturingDate() %></td>
 				<td><a href="updateProduct.jsp?id1=<%=product.getId()%> ">update</a></td>
 				<td><a href="DeleteServlet?id=<%=product.getId()%> ">delete</a></td>
 			</tr>

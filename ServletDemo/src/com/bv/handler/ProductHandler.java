@@ -1,10 +1,12 @@
 package com.bv.handler;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +20,14 @@ public class ProductHandler {
 	public static int addProducts(Products products) {
 		con = DBConnect.getConnection();
 		int status = 0;
-		String sql = "insert into products(productname,manufacturername,price) values(?,?,?)";
+		String sql = "insert into products(productname,manufacturername,price,manufracturingDate) values(?,?,?,?)";
 		try {
 			PreparedStatement prestatement = con.prepareStatement(sql);
 			prestatement.setString(1, products.getProductname());
 			prestatement.setString(2, products.getManufacturername());
 			prestatement.setDouble(3, products.getPrice());
+			/*java.sql.Date sqlDate = new java.sql.Date(products.getManufracturingDate().getDate());*/ 
+			prestatement.setDate(4, (Date) products.getManufracturingDate());
 			status = prestatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -35,13 +39,14 @@ public class ProductHandler {
 	public static int updateProducts(Products product) {
 		con = DBConnect.getConnection();
 		int status = 0;
-		String sql = "update products set productname = ?,manufacturername = ?,price = ? where id = ? ";
+		String sql = "update products set productname = ?,manufacturername = ?,price = ?,manufracturingDate = ? where id = ? ";
 		try {
 			PreparedStatement prestatement = con.prepareStatement(sql);
 			prestatement.setString(1, product.getProductname());
 			prestatement.setString(2, product.getManufacturername());
 			prestatement.setDouble(3, product.getPrice());
 			prestatement.setInt(4, product.getId());
+			prestatement.setDate(5, (Date) product.getManufracturingDate());
 			status = prestatement.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -80,6 +85,7 @@ public class ProductHandler {
 				product.setId(rs.getInt("id"));
 				product.setProductname(rs.getString("productname"));
 				product.setManufacturername(rs.getString("manufacturername"));
+				product.setManufracturingDate(rs.getDate("manufracturingDate"));
 				product.setPrice(rs.getDouble(4));
 				
 				productList.add(product);
@@ -105,6 +111,7 @@ public class ProductHandler {
 				product.setProductname(rs.getString("productname"));
 				product.setManufacturername(rs.getString("manufacturername"));
 				product.setPrice(rs.getDouble("price"));
+				product.setManufracturingDate(rs.getDate("manufracturingDate"));
 				System.out.println(product.getManufacturername());
 
 				}

@@ -1,10 +1,20 @@
 package com.bv.model;
 
+import java.util.Date;
+
 public class Products {
 
 	private int id;
 	private String manufacturername,productname;
 	private double price;
+	private Date manufracturingDate;
+	
+	public Date getManufracturingDate() {
+		return manufracturingDate;
+	}
+	public void setManufracturingDate(Date manufracturingDate) {
+		this.manufracturingDate = manufracturingDate;
+	}
 	public int getId() {
 		return id;
 	}

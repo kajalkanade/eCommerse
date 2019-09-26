@@ -2,6 +2,9 @@ package com.bv.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,15 +41,31 @@ public class UpdateServlet extends HttpServlet {
 		String prodName = request.getParameter("productname");
 		String manufacturerName = request.getParameter("manufacturername");
 		String price = request.getParameter("price");
+		String manufracturingDate = request.getParameter("manufracturingDate");
 
-		Products prod = new Products();
+		int status = 0;
+		try {
+			Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(manufracturingDate);
+			Products prod = new Products();
+			prod.setProductname(prodName);
+			prod.setManufacturername(manufacturerName);
+			prod.setPrice(Double.parseDouble(price));
+			prod.setManufracturingDate(date1);
+			
+			status = ProductHandler.addProducts(prod);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+/*		Products prod = new Products();
 		prod.setId(id);
 		prod.setProductname(prodName);
 		prod.setManufacturername(manufacturerName);
 		prod.setPrice(Double.parseDouble(price));
 
 		int status = ProductHandler.updateProducts(prod);
-
+*/
 		if (status > 0) {
 			/*
 			 * out.print("<h2>Product Updated successfully</h2>");
